@@ -1,9 +1,9 @@
-import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-
-// register ScrollTrigger from gsap
+import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/all';
+
 import AnimatedTitle from './AnimatedTitle';
+
 gsap.registerPlugin(ScrollTrigger);
 
 const About = () => {
@@ -19,7 +19,7 @@ const About = () => {
 			},
 		});
 
-		clipAnimation.to('#clip', {
+		clipAnimation.to('.mask-clip-path', {
 			width: '100vw',
 			height: '100vh',
 			borderRadius: 0,
@@ -27,14 +27,14 @@ const About = () => {
 	});
 
 	return (
-		<div id="about" className="min-h-screen">
+		<div id="about" className="min-h-screen w-screen">
 			<div className="relative mb-8 mt-36 flex flex-col items-center gap-5">
-				<h2 className="fot-general text-sm uppercase md:text-[10px]">
-					Welcome to Zanimate
-				</h2>
+				<p className="font-general text-sm uppercase md:text-[10px]">
+					Welcome to ZANIMATE
+				</p>
+
 				<AnimatedTitle
-					title="Disc<b>o</b>ver the world's <br /> l<b>a</b>rgest collection of
-			ZANIMATE"
+					title="Disc<b>o</b>ver the world's <br /> largest shared <b>a</b>dventure"
 					containerClass="mt-5 !text-black text-center"
 				/>
 
@@ -43,15 +43,18 @@ const About = () => {
 						The ZANIMATE is a game that allows you to play with your friends and
 						family in a virtual reality environment.
 					</p>
-					<p>ZANIMATE unites the digital world with real life.</p>
+					<p className="text-gray-500">
+						ZANIMATE unites the digital world with real life.
+					</p>
 				</div>
 			</div>
+
 			<div className="h-dvh w-screen" id="clip">
 				<div className="mask-clip-path about-image">
 					<img
 						src="img/about.webp"
 						alt="Background"
-						className="absolute top-0 left-0 size-full object-cover"
+						className="absolute left-0 top-0 size-full object-cover"
 					/>
 				</div>
 			</div>
