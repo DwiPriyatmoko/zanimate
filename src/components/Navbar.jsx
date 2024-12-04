@@ -10,8 +10,8 @@ const navItems = ['Nexus', 'Mint', 'Prologue', 'About', 'Contact'];
 
 const NavBar = () => {
 	// State for toggling audio and visual indicator
-	const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-	const [isIndicatorActive, setIsIndicatorActive] = useState(false);
+	const [isAudioPlaying, setIsAudioPlaying] = useState(true);
+	const [isIndicatorActive, setIsIndicatorActive] = useState(true);
 
 	// Refs for audio and navigation container
 	const audioElementRef = useRef(null);
@@ -29,10 +29,23 @@ const NavBar = () => {
 
 	// Manage audio playback
 	useEffect(() => {
+		const initAudio = async () => {
+			if (audioElementRef.current) {
+				audioElementRef.current.volume = 0.5;
+				try {
+					await audioElementRef.current.play();
+				} catch (error) {
+					console.log('Initial audio playback failed:', error);
+					setIsAudioPlaying(false);
+					setIsIndicatorActive(false);
+				}
+			}
+		};
+
 		if (isAudioPlaying) {
-			audioElementRef.current.play();
+			initAudio();
 		} else {
-			audioElementRef.current.pause();
+			audioElementRef.current?.pause();
 		}
 	}, [isAudioPlaying]);
 
@@ -104,6 +117,7 @@ const NavBar = () => {
 								className="hidden"
 								src="/audio/loop.mp3"
 								loop
+								preload="auto"
 							/>
 							{[1, 2, 3, 4].map((bar) => (
 								<div
