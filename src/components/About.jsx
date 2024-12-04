@@ -34,18 +34,12 @@ const About = () => {
 				</p>
 
 				<AnimatedTitle
-					title="Disc<b>o</b>ver the world's <br /> largest shared <b>a</b>dventure"
+					title="Emb<b>a</b>rk on an epic <br /> digital <b>o</b>dyssey"
 					containerClass="mt-5 !text-black text-center"
 				/>
 
-				<div className="about-subtext">
-					<p>
-						The ZANIMATE is a game that allows you to play with your friends and
-						family in a virtual reality environment.
-					</p>
-					<p className="text-gray-500">
-						ZANIMATE unites the digital world with real life.
-					</p>
+				<div className="about-subtext z-10">
+					<p>ZANIMATE unites the digital world with real life.</p>
 				</div>
 			</div>
 

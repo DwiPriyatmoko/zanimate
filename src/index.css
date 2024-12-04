@@ -47,6 +47,19 @@ body {
 		@apply relative ms-10 font-general text-xs uppercase text-blue-50 after:absolute after:-bottom-0.5 after:left-0 after:h-[2px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-neutral-800 after:transition-transform after:duration-300 after:ease-[cubic-bezier(0.65_0.05_0.36_1)] hover:after:origin-bottom-left hover:after:scale-x-100 dark:after:bg-white cursor-pointer;
 	}
 
+	.mobile-nav-link {
+		@apply relative text-2xl font-general uppercase text-blue-50 tracking-wider;
+	}
+
+	.mobile-nav-link::after {
+		content: '';
+		@apply absolute -bottom-2 left-0 h-0.5 w-0 bg-blue-50 transition-all duration-300;
+	}
+
+	.mobile-nav-link:hover::after {
+		@apply w-full;
+	}
+
 	.floating-nav {
 		@apply bg-slate-950 rounded-lg border;
 	}
@@ -73,7 +86,7 @@ body {
 	}
 
 	.about-subtext {
-		@apply absolute bottom-[-80dvh] left-1/2 w-full max-w-96 -translate-x-1/2 text-center font-circular-web text-lg md:max-w-[34rem];
+		@apply absolute bottom-[-80dvh] left-1/2 w-full max-w-96 -translate-x-1/2 text-center bento-title special-font text-lg md:max-w-[24rem];
 	}
 
 	.about-image {
@@ -140,6 +153,39 @@ body {
 
 	.contact-clip-path-2 {
 		clip-path: polygon(29% 15%, 85% 30%, 50% 100%, 10% 64%);
+	}
+
+	/* Hamburger Menu Styles */
+	.hamburger {
+		@apply relative h-6 w-6;
+	}
+
+	.hamburger .line {
+		@apply absolute left-0 h-0.5 w-6 bg-blue-50 transition-all duration-300;
+	}
+
+	.hamburger .line:nth-child(1) {
+		@apply top-0 w-4 right-0 left-auto;
+	}
+
+	.hamburger .line:nth-child(2) {
+		@apply top-1/2 -translate-y-1/2 w-6;
+	}
+
+	.hamburger .line:nth-child(3) {
+		@apply bottom-0 w-5;
+	}
+
+	.hamburger.active .line:nth-child(1) {
+		@apply top-1/2 -translate-y-1/2 rotate-45 w-6 left-0;
+	}
+
+	.hamburger.active .line:nth-child(2) {
+		@apply opacity-0 translate-x-full;
+	}
+
+	.hamburger.active .line:nth-child(3) {
+		@apply bottom-1/2 translate-y-1/2 -rotate-45 w-6;
 	}
 }
 
