@@ -122,7 +122,7 @@ const Hero = () => {
 					<video
 						ref={nextVdRef}
 						src={getVideoSrc(currentIndex)}
-						// loop
+						loop
 						muted
 						id="next-video"
 						className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
@@ -132,8 +132,8 @@ const Hero = () => {
 						src={getVideoSrc(
 							currentIndex === totalVideos - 1 ? 1 : currentIndex
 						)}
-						// autoPlay
-						// loop
+						autoPlay
+						loop
 						muted
 						className="absolute left-0 top-0 size-full object-cover object-center"
 						onLoadedData={handleVideoLoad}
@@ -158,7 +158,7 @@ const Hero = () => {
 							id="watch-trailer"
 							title="Watch trailer"
 							leftIcon={<TiLocationArrow />}
-							containerClass="bg-yellow-300 flex-center gap-1"
+							containerClass="bg-grass-300 flex-center gap-1"
 						/>
 					</div>
 				</div>
