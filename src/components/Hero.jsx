@@ -12,12 +12,13 @@ gsap.registerPlugin(ScrollTrigger);
 const Hero = () => {
 	const [currentIndex, setCurrentIndex] = useState(1);
 	const [hasClicked, setHasClicked] = useState(false);
-
 	const [loading, setLoading] = useState(true);
 	const [loadedVideos, setLoadedVideos] = useState(0);
+	const [isTransitioning, setIsTransitioning] = useState(false);
 
 	const totalVideos = 4;
 	const nextVdRef = useRef(null);
+	const timelineRef = useRef(null);
 
 	const handleVideoLoad = () => {
 		setLoadedVideos((prev) => prev + 1);
@@ -30,34 +31,67 @@ const Hero = () => {
 	}, [loadedVideos]);
 
 	const handleMiniVdClick = () => {
-		setHasClicked(true);
+		if (loading || isTransitioning) return;
 
+		setIsTransitioning(true);
+		setHasClicked(true);
 		setCurrentIndex((prevIndex) => (prevIndex % totalVideos) + 1);
+	};
+
+	const safePlayVideo = async (videoRef) => {
+		if (!videoRef.current) return;
+
+		try {
+			// Reset the video to ensure it starts from the beginning
+			videoRef.current.currentTime = 0;
+			await videoRef.current.play();
+		} catch (error) {
+			if (error.name !== 'AbortError') {
+				console.error('Video play error:', error);
+			}
+			// Don't throw the error - just log it and continue
+		}
 	};
 
 	useGSAP(
 		() => {
-			if (hasClicked) {
-				gsap.set('#next-video', { visibility: 'visible' });
-				gsap.to('#next-video', {
+			if (!hasClicked) return;
+
+			// Kill previous timeline if it exists
+			if (timelineRef.current) {
+				timelineRef.current.kill();
+			}
+
+			gsap.set('#next-video', { visibility: 'visible' });
+			
+			timelineRef.current = gsap.timeline({
+				onStart: () => {
+					safePlayVideo(nextVdRef);
+				},
+				onComplete: () => {
+					setIsTransitioning(false);
+					setHasClicked(false);
+				},
+			});
+
+			timelineRef.current
+				.to('#next-video', {
 					transformOrigin: 'center center',
 					scale: 1,
 					width: '100%',
 					height: '100%',
 					duration: 1,
 					ease: 'power1.inOut',
-					onStart: () => nextVdRef.current.play(),
-				});
-				gsap.from('#current-video', {
+				})
+				.from('#current-video', {
 					transformOrigin: 'center center',
 					scale: 0,
 					duration: 1.5,
 					ease: 'power1.inOut',
-				});
-			}
+				}, '-=0.5');
 		},
 		{
-			dependencies: [currentIndex],
+			dependencies: [currentIndex, hasClicked],
 			revertOnUpdate: true,
 		}
 	);
@@ -86,7 +120,6 @@ const Hero = () => {
 		<div className="relative h-dvh w-screen overflow-x-hidden">
 			{loading && (
 				<div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
-					{/* https://uiverse.io/G4b413l/tidy-walrus-92 */}
 					<div className="three-body">
 						<div className="three-body__dot"></div>
 						<div className="three-body__dot"></div>
@@ -104,13 +137,17 @@ const Hero = () => {
 						<VideoPreview>
 							<div
 								onClick={handleMiniVdClick}
-								className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
+								className={`origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100 ${
+									isTransitioning ? 'pointer-events-none' : ''
+								}`}
 							>
 								<video
 									ref={nextVdRef}
 									src={getVideoSrc((currentIndex % totalVideos) + 1)}
 									loop
 									muted
+									playsInline
+									preload="auto"
 									id="current-video"
 									className="size-64 origin-center scale-150 object-cover object-center"
 									onLoadedData={handleVideoLoad}
@@ -124,17 +161,19 @@ const Hero = () => {
 						src={getVideoSrc(currentIndex)}
 						loop
 						muted
+						playsInline
+						preload="auto"
 						id="next-video"
 						className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
 						onLoadedData={handleVideoLoad}
 					/>
 					<video
-						src={getVideoSrc(
-							currentIndex === totalVideos - 1 ? 1 : currentIndex
-						)}
+						src={getVideoSrc(currentIndex === totalVideos - 1 ? 1 : currentIndex)}
 						autoPlay
 						loop
 						muted
+						playsInline
+						preload="auto"
 						className="absolute left-0 top-0 size-full object-cover object-center"
 						onLoadedData={handleVideoLoad}
 					/>
