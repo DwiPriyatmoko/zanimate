@@ -40,7 +40,7 @@ const Contact = () => {
 					</p>
 
 					<AnimatedTitle
-						title="let&#39;s b<b>u</b>ild the <br /> new era of <br /> g<b>a</b>ming t<b>o</b>gether."
+						title="let&#39;s sh<b>a</b>pe the <br /> future of <br /> g<b>a</b>mes t<b>o</b>day."
 						className="special-font !md:text-[6.2rem] w-full font-zanimate !text-5xl !font-black !leading-[.9]"
 					/>
 

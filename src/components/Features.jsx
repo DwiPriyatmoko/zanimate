@@ -120,7 +120,7 @@ const Features = () => (
 				<BentoCard
 					src="videos/feature-1.mp4"
 					title={<>Enter the Virtual Frontier</>}
-					description="A cross-platform metagame app, turning your activities across Web2 and Web3 games into a rewarding adventure."
+					description="A gaming platform that connects your traditional and blockchain gaming experiences, with rewards for every achievement."
 					isComingSoon
 				/>
 			</BentoTilt>
@@ -134,7 +134,7 @@ const Features = () => (
 								z<b>ee</b>d
 							</>
 						}
-						description="An anime and gaming-inspired NFT collection - the IP primed for expansion."
+						description="A unique digital collectibles series blending anime and gaming aesthetics - ready to evolve into something bigger."
 						isComingSoon
 					/>
 				</BentoTilt>
@@ -147,7 +147,7 @@ const Features = () => (
 								n<b>e</b>xus
 							</>
 						}
-						description="A gamified social hub, adding a new dimension of play to social interaction for Web3 communities."
+						description="A playful social space where Web3 communities connect through interactive experiences."
 						isComingSoon
 					/>
 				</BentoTilt>
@@ -160,7 +160,7 @@ const Features = () => (
 								ni<b>c</b>o
 							</>
 						}
-						description="A cross-world AI Agent - elevating your gameplay to be more fun and productive."
+						description="An AI companion that enhances your gaming experience across platforms with smart assistance."
 						isComingSoon
 					/>
 				</BentoTilt>
